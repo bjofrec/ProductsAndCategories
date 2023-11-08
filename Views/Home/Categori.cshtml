@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<ul>
+    <li><a href="/">Products</a></li>
+    <li><a href="/categories">Categories</a></li>
+</ul>
+<div>
+    <h1>@ViewBag.Category.Name</h1>
+    <div>
+        <h2>Products</h2>
+        @foreach (Association a in ViewBag.Category.Products)
+        {
+            <p>@a.Product.Name</p>
+        }
+    </div>
+    <div>
+        @model Association
+        <form asp-action="AddProduct" asp-controller="Category" method="POST">
+            <input hidden asp-for="CategoryId" value="@ViewBag.Category.CategoryId">
+            @Html.DropDownList("ProductId", new SelectList(ViewBag.Products, "ProductId", "Name"))
+            <input type="submit" value="Add Category">
+        </form>
+        
+    </div>
+</div>
